@@ -10,20 +10,21 @@ section.attachments.attachment-full(
     ng-show="vm.showAttachments()"
 )
     .attachments-header
-        h3.attachments-title #[span.attachments-num {{vm.attachments.size}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
+        h3.attachments-title
+            | #[span.attachments-num {{vm.attachments.size}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
         .options
             button.view-gallery(
                 ng-class="{'is-active': vm.mode == 'gallery'}"
                 ng-if="vm.attachments.size"
                 ng-click="vm.setMode('gallery')"
-                title="{{ 'ATTACHMENT.GALLERY_VIEW_MODE' | translate }}"
+                title="{{'ATTACHMENT.GALLERY_VIEW_MODE' | translate}}"
             )
                 tg-svg(svg-icon="icon-gallery")
             button.view-list(
                 ng-class="{'is-active': vm.mode == 'list'}"
                 ng-if="vm.attachments.size"
                 ng-click="vm.setMode('list')"
-                title="{{ 'ATTACHMENT.LIST_VIEW_MODE' | translate }}"
+                title="{{'ATTACHMENT.LIST_VIEW_MODE' | translate}}"
             )
                 tg-svg(svg-icon="icon-list")
 
