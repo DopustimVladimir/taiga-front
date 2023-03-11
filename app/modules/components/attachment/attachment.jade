@@ -26,9 +26,6 @@ form.single-attachment(
         span.deprecated-file(ng-if="vm.attachment.getIn(['file', 'is_deprecated'])") {{'ATTACHMENT.DEPRECATED' | translate}}
         span {{vm.attachment.getIn(['file', 'description'])}}
 
-    .attachment-size
-        span {{::vm.attachment.getIn(['file', 'size']) | sizeFormat}}
-
     .editable.editable-attachment-comment(ng-if="vm.attachment.get('editable')")
         input(
             type="text",
@@ -51,6 +48,12 @@ form.single-attachment(
         label.is_deprecated(
             for="attach-{{::vm.attachment.getIn(['file', 'id'])}}-is-deprecated"
             translate="{{'ATTACHMENT.DEPRECATED_FILE' | translate}}")
+
+    .attachment-size
+        span {{::vm.attachment.getIn(['file', 'size']) | sizeFormat}}
+
+    .attachment-created-date
+        span {{::vm.attachment.getIn(['file', 'created_date']) | momentFormat:'DD MMM YYYY HH:mm'}}
 
     .attachment-settings(ng-if="vm.attachment.get('editable')")
         div(tg-loading="vm.attachment.get('loading')")
