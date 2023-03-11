@@ -18,6 +18,11 @@ tg-wysiwyg {
             display: block;
         }
     }
+    .tools-ext {
+        display: flex;
+        gap: 10px;
+        justify-content: right;
+    }
     .mode-editor {
         margin-top: .25rem;
         span {

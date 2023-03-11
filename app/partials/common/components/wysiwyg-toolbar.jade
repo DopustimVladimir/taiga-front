@@ -31,6 +31,10 @@
             tg-svg(svg-icon="icon-question")
             span(translate="COMMON.WYSIWYG.MARKDOWN_HELP")
 
+    .tools-ext(ng-if="editMode")
+        button.btn-big(ng-click="save($event)")
+            span(translate="COMMON.SAVE")
+
 .tools(ng-class="{visible: editMode}")
     a.e2e-save-editor(
         ng-class="{disabled: required && !markdown.length}"
