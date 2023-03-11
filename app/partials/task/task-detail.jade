@@ -13,7 +13,7 @@ div.wrapper(
 )
     tg-project-menu
 
-    div.main.detail
+    div.main.detail(ng-class="{closed: task.is_closed}")
         .detail-header-container(ng-class="{blocked: task.is_blocked}")
             tg-detail-nav(item="task")
             .detail-header
@@ -104,7 +104,7 @@ div.wrapper(
                 project="project"
             )
 
-    sidebar.sidebar.ticket-data
+    sidebar.sidebar.ticket-data(ng-class="{closed: task.is_closed}")
 
         section.ticket-header
             span.ticket-title(
