@@ -16,9 +16,22 @@ section.profile-timeline
     div(
         infinite-scroll="vm.loadTimeline()"
         infinite-scroll-disabled="vm.scrollDisabled"
-        ng-if="vm.timelineList.size"
     )
         div(
-            tg-repeat="timeline in vm.timelineList"
+            style="background: #F1F1F4; padding: .5rem 1rem;"
+        )
+            span {{'TIMELINE.FILTER_BY_ISSUE' | translate}}:
+            input(
+                type="text"
+                ng-model="filterValue"
+                ng-change="vm.filterTimelineList(filterValue)"
+                style="width: 120px;"
+            )
+        div(
+            tg-repeat="timeline in vm.timelineListVisible"
             tg-user-timeline-item="timeline"
         )
+        div(
+            ng-if="!vm.timelineListVisible.size"
+            style="padding: .5rem 1rem;"
+        ) {{'TIMELINE.NOTHING_FOUND' | translate}}

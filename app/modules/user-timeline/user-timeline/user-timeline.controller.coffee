@@ -20,6 +20,7 @@ class UserTimelineController extends mixOf(taiga.Controller, taiga.PageMixin, ta
         @.scrollDisabled = false
 
         @.timeline = null
+        @.filterValue = null
 
         if @.projectId
             @.timeline = @userTimelineService.getProjectTimeline(@.projectId)
@@ -37,11 +38,27 @@ class UserTimelineController extends mixOf(taiga.Controller, taiga.PageMixin, ta
             .next()
             .then (response) =>
                 @.timelineList = @.timelineList.concat(response.get("items"))
+                if not @.filterValue
+                    @.timelineListVisible = @.timelineList
+                else
+                    @.filterTimelineList(@.filterValue)
 
                 if response.get("next")
                     @.scrollDisabled = false
 
                 return @.timelineList
+
+    filterTimelineList: (filterValue) ->
+        if not filterValue
+            @.timelineListVisible = @.timelineList
+        else
+            @.timelineListVisible = @.timelineList.filter (it) ->
+                if not it.getIn([ 'data', 'issue' ])
+                    return false
+                matchRef = it.getIn([ 'data', 'issue', 'ref' ]) is parseInt(filterValue)
+                matchSubject = it.getIn([ 'data', 'issue', 'subject' ]).includes(filterValue)
+                return matchRef or matchSubject
+        @.filterValue = filterValue
 
 angular.module("taigaUserTimeline")
     .controller("UserTimeline", UserTimelineController)
