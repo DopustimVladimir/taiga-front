@@ -8,7 +8,7 @@
 
 taiga = @.taiga
 
-ProjectMenuDirective = (projectService, lightboxFactory) ->
+ProjectMenuDirective = (projectService, lightboxFactory, $timeout, $rootScope, $translate) ->
     link = (scope, el, attrs, ctrl) ->
         projectChange = () ->
             if projectService.project
@@ -33,6 +33,26 @@ ProjectMenuDirective = (projectService, lightboxFactory) ->
                 el.find('.sticky-project-menu').removeClass('unblock')
                 fixed = false
 
+        $timeout ( ->
+            newIssueButton = document.createElement('button')
+            newIssueButton.textContent = $translate.instant('ISSUES.ACTION_NEW_ISSUE')
+            newIssueButton.style.cssText = 'cursor: pointer;' +
+                'display: inline-flex; justify-content: center; align-items: center;' +
+                'box-sizing: border-box; padding: .75rem 1.5rem; margin: 10px;' +
+                'border: 0; border-radius: 4px;' +
+                'color: #2E3440; background-color: #83EEDE;' +
+                'font: inherit; font-size: .8rem; line-height: initial;' +
+                'text-align: center; text-transform: uppercase; white-space: nowrap;'
+            newIssueButton.addEventListener 'click', () ->
+                project = projectService.project.toJS()
+                $rootScope.$broadcast 'genericform:new',
+                    objType: 'issue',
+                    project: project
+            navInner = document.querySelector('tg-legacy-loader').shadowRoot.querySelector('.nav-inner')
+            menu = navInner.querySelector('.main-menu')
+            navInner.insertBefore(newIssueButton, menu.nextSibling)
+        ), 10
+
     return {
         scope: {},
         controller: "ProjectMenu",
@@ -43,7 +63,10 @@ ProjectMenuDirective = (projectService, lightboxFactory) ->
 
 ProjectMenuDirective.$inject = [
     "tgProjectService",
-    "tgLightboxFactory"
+    "tgLightboxFactory",
+    '$timeout',
+    '$rootScope',
+    '$translate'
 ]
 
 angular.module("taigaComponents").directive("tgProjectMenu", ProjectMenuDirective)
