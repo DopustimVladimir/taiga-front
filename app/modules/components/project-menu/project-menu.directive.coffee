@@ -42,7 +42,14 @@ ProjectMenuDirective = (projectService, lightboxFactory, $timeout, $rootScope, $
                 'border: 0; border-radius: 4px;' +
                 'color: #2E3440; background-color: #83EEDE;' +
                 'font: inherit; font-size: .8rem; line-height: initial;' +
-                'text-align: center; text-transform: uppercase; white-space: nowrap;'
+                'text-align: center; text-transform: uppercase; white-space: nowrap;' +
+                'transition: all .3s linear;'
+            newIssueButton.addEventListener 'mouseover', () ->
+                @.style.backgroundColor = '#008AA8'
+                @.style.color = '#FFFFFF'
+            newIssueButton.addEventListener 'mouseleave', () ->
+                @.style.backgroundColor = '#83EEDE'
+                @.style.color = '#2E3440'
             newIssueButton.addEventListener 'click', () ->
                 project = projectService.project.toJS()
                 $rootScope.$broadcast 'genericform:new',
