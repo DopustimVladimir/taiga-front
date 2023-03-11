@@ -10,7 +10,7 @@
 
 taiga = @.taiga
 
-Wysiwyg = ($translate, $confirm, $storage, wysiwygService, animationFrame, tgLoader, analytics, $location, $attachmentsFullService) ->
+Wysiwyg = ($translate, $confirm, $storage, wysiwygService, animationFrame, tgLoader, analytics, $location, $timeout, $attachmentsFullService) ->
     link = ($scope, $el, $attrs) ->
         isEditOnly = !!$attrs.$attr.editonly
         notPersist = !!$attrs.$attr.notPersist
@@ -145,6 +145,17 @@ Wysiwyg = ($translate, $confirm, $storage, wysiwygService, animationFrame, tgLoa
 
             return
 
+        $scope.save_and_assign = (e) ->
+            e.preventDefault() if e
+
+            $scope.save(e)
+
+            $timeout ( ->
+                angular.element('[ng-click="openAssignedUsers()"]').triggerHandler('click')
+            ), 10
+
+            return
+
         $scope.cancel = (e) ->
             e.preventDefault() if e
 
@@ -276,6 +287,7 @@ angular.module("taigaComponents").directive("tgWysiwyg", [
     "tgLoader",
     "$tgAnalytics",
     "$location",
+    '$timeout',
     "tgAttachmentsFullService",
     Wysiwyg
 ])

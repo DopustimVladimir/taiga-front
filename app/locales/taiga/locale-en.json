@@ -8,6 +8,7 @@
         "DATE": "DD MMM YYYY",
         "DATETIME": "DD MMM YYYY HH:mm",
         "SAVE": "Save",
+        "SAVE_AND_ASSIGN": "Save and assign",
         "CANCEL": "Cancel",
         "ACCEPT": "Accept",
         "DELETE": "Delete",

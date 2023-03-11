@@ -8,6 +8,7 @@
         "DATE": "DD MMM YYYY",
         "DATETIME": "DD MMM YYYY HH:mm",
         "SAVE": "Сохранить",
+        "SAVE_AND_ASSIGN": "Сохранить и назначить",
         "CANCEL": "Отмена",
         "ACCEPT": "Принимаю",
         "DELETE": "Удалить",
