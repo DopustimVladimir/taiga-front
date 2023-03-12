@@ -13,6 +13,22 @@ section.attachments.attachment-full(
         h3.attachments-title
             | #[span.attachments-num {{vm.attachments.size}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
         .options
+            button.sort-attachments(
+                tg-attachments-sort-by
+                ng-if="vm.attachments.size"
+                title="{{'ATTACHMENT.SORT' | translate}}"
+            )
+                tg-svg(svg-icon="icon-arrow-down")
+                ul.popover.pop-attachments-sort-by
+                    li
+                        a(href="" class="sort-by-prop" ng-click="vm.sortAttachments('name')")
+                            span.item-text {{'ATTACHMENT.SORT_BY_NAME' | translate}}
+                    li
+                        a(href="" class="sort-by-prop" ng-click="vm.sortAttachments('size')")
+                            span.item-text {{'ATTACHMENT.SORT_BY_SIZE' | translate}}
+                    li
+                        a(href="" class="sort-by-prop" ng-click="vm.sortAttachments('created_date')")
+                            span.item-text {{'ATTACHMENT.SORT_BY_DATE' | translate}}
             button.view-gallery(
                 ng-class="{'is-active': vm.mode == 'gallery'}"
                 ng-if="vm.attachments.size"

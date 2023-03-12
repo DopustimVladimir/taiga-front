@@ -92,6 +92,33 @@ UsStatusDirective = ($repo, $template) ->
 module.directive("tgUsStatus", ["$tgRepo", "$tgTemplate", UsStatusDirective])
 
 #############################################################################
+## Attachments Sort By Directive
+#############################################################################
+
+AttachmentsSortByDirective = ($repo, $template) ->
+
+    link = ($scope, $el, $attrs) ->
+        $ctrl = $el.controller()
+
+        $el.on 'click', (event) ->
+            event.preventDefault()
+            event.stopPropagation()
+            $el.find('.pop-attachments-sort-by').popover().open()
+
+        $el.on 'click', '.sort-by-prop', (event) ->
+            event.preventDefault()
+            event.stopPropagation()
+            target = angular.element(event.currentTarget)
+            $el.find('.pop-attachments-sort-by').popover().close()
+
+        $scope.$on '$destroy', ->
+            $el.off()
+
+    return { link: link }
+
+module.directive('tgAttachmentsSortBy', [ '$tgRepo', '$tgTemplate', AttachmentsSortByDirective ])
+
+#############################################################################
 ## Related Task Status Directive
 #############################################################################
 

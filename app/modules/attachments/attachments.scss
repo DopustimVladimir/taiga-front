@@ -33,6 +33,17 @@
     }
     .options {
         display: flex;
+        .sort-attachments {
+            padding: 0 .5rem;
+            position: relative;
+            .pop-attachments-sort-by {
+                @include popover(
+                    $width: 150px,
+                    $top: 1.25rem,
+                    $left: 0,
+                );
+            }
+        }
     }
     label {
         cursor: pointer;

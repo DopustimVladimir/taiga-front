@@ -44,6 +44,9 @@ class AttachmentsFullController
 
         @storage.set('attachment-mode', mode)
 
+    sortAttachments: (prop) ->
+        @attachmentsFullService.sortAttachments(prop)
+
     toggleDeprecatedsVisible: () ->
         @attachmentsFullService.toggleDeprecatedsVisible()
 

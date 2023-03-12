@@ -90,6 +90,22 @@ class AttachmentsFullService extends taiga.Service
 
         return @attachmentsService.delete(type, toDeleteAttachment.getIn(['file', 'id'])).then(onSuccess)
 
+    sortAttachments: (prop) ->
+        @._attachments = @._attachments.sort((a, b) ->
+            if prop is 'created_date'
+                a = new Date(a.getIn([ 'file', 'created_date' ])).valueOf()
+                b = new Date(b.getIn([ 'file', 'created_date' ])).valueOf()
+            else
+                a = a.getIn([ 'file', prop ])
+                b = b.getIn([ 'file', prop ])
+            if a < b
+                return -1
+            if a > b
+                return 1
+            return 0
+        )
+        @.regenerate()
+
     reorderAttachment: (objectId, type, attachment, newIndex) ->
         oldIndex = @.attachments.findIndex (it) -> it == attachment
 
