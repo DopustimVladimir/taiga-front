@@ -10,6 +10,7 @@ sizeFormat = @.taiga.sizeFormat
 
 class AttachmentsFullController
     @.$inject = [
+        '$http',
         "$translate",
         "$tgConfirm",
         "$tgConfig",
@@ -19,12 +20,13 @@ class AttachmentsFullController
         "tgAttachmentsPreviewService"
     ]
 
-    constructor: (@translate, @confirm, @config, @storage, @attachmentsFullService, @projectService, @attachmentsPreviewService) ->
+    constructor: (@http, @translate, @confirm, @config, @storage, @attachmentsFullService, @projectService, @attachmentsPreviewService) ->
         @.mode = @storage.get('attachment-mode', 'list')
 
         @.maxFileSize = @config.get("maxUploadFileSize", null)
         @.maxFileSize = sizeFormat(@.maxFileSize) if @.maxFileSize
         @.maxFileSizeMsg = if @.maxFileSize then @translate.instant("ATTACHMENT.MAX_UPLOAD_SIZE", {maxFileSize: @.maxFileSize}) else ""
+        @.attachmentsZipHref = "#{@config.get('api')}zip_attachments?project=#{@.projectId}&object_id=#{@.objId}"
 
         taiga.defineImmutableProperty @, 'attachments', () => return @attachmentsFullService.attachments
         taiga.defineImmutableProperty @, 'deprecatedsCount', () => return @attachmentsFullService.deprecatedsCount

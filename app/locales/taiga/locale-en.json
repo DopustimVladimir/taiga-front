@@ -473,6 +473,7 @@
         "SORT_BY_NAME": "by name",
         "SORT_BY_SIZE": "by size",
         "SORT_BY_DATE": "by date",
+        "DOWNLOAD_ALL": "Download all attachments",
         "SHOW_DEPRECATED": "+ show deprecated attachments",
         "HIDE_DEPRECATED": "- hide deprecated attachments",
         "COUNT_DEPRECATED": "({{ counter }} deprecated)",

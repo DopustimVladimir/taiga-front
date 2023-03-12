@@ -473,6 +473,7 @@
         "SORT_BY_NAME": "по имени",
         "SORT_BY_SIZE": "по размеру",
         "SORT_BY_DATE": "по дате",
+        "DOWNLOAD_ALL": "Скачать все вложения",
         "SHOW_DEPRECATED": "+ показать устаревшие вложения",
         "HIDE_DEPRECATED": "- спрятать устаревшие вложения",
         "COUNT_DEPRECATED": "({{ counter }} устарело)",

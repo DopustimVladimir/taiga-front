@@ -13,6 +13,12 @@ section.attachments.attachment-full(
         h3.attachments-title
             | #[span.attachments-num {{vm.attachments.size}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
         .options
+            a.download-attachments(
+                ng-if="vm.attachments.size"
+                ng-href="{{vm.attachmentsZipHref}}"
+                title="{{'ATTACHMENT.DOWNLOAD_ALL' | translate}}"
+            )
+                tg-svg(svg-icon="icon-download")
             button.sort-attachments(
                 tg-attachments-sort-by
                 ng-if="vm.attachments.size"

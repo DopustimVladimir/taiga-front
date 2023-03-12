@@ -1,5 +1,9 @@
 <svg height="0" style="position: absolute; width: 0; height: 0;" version="1.1" width="0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
     <defs>
+        <symbol id="icon-download" viewBox="0 0 24 24">
+            <title>download</title>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M20 21V22C20.5523 22 21 21.5523 21 21H20ZM4 21H3C3 21.5523 3.44772 22 4 22V21ZM12 16.471L11.2929 17.1781L12 17.8852L12.7071 17.1781L12 16.471ZM19 14V21H21V14H19ZM20 20H4V22H20V20ZM5 21V14H3V21H5ZM17.2929 9.76389L11.2929 15.7639L12.7071 17.1781L18.7071 11.1781L17.2929 9.76389ZM12.7071 15.7639L6.70711 9.76389L5.29289 11.1781L11.2929 17.1781L12.7071 15.7639ZM11 4L11 16.471L13 16.471L13 4L11 4Z"/>
+        </symbol>
         <symbol id="icon-private" viewBox="0 0 96 47">
             <title>private</title>
             <path d="M19 0A19 23 0 0 0 0 23a19 23 0 0 0 19 23 19 23 0 0 0 19-21h23v15h9V25h11v15h9V25h5v-9H37A19 23 0 0 0 19 0zm0 10a9 13 0 0 1 10 13 9 13 0 0 1-10 13 9 13 0 0 1-9-13 9 13 0 0 1 9-13z"/>

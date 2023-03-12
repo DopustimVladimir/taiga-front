@@ -54,10 +54,13 @@
             padding: .5rem;
         }
     }
+    .download-attachments,
     .view-gallery,
     .view-list {
         background: none;
+        display: flex;
         margin-right: .2rem;
+        padding: 0 .5rem;
         &:hover,
         &.is-active {
             svg {
