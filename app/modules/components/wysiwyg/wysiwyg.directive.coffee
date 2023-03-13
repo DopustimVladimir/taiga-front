@@ -60,7 +60,7 @@ Wysiwyg = ($translate, $confirm, $storage, wysiwygService, animationFrame, tgLoa
                 if ($scope.markdown.length || content.length) && $scope.markdown == content
                     return
 
-                content = getCurrentContent()
+                # content = getCurrentContent()
 
                 $scope.markdown = content
 
