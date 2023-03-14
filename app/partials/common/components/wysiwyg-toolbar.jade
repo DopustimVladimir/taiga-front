@@ -36,18 +36,3 @@
             span(translate="COMMON.SAVE")
         button.btn-big(ng-click="save_and_assign($event)")
             span(translate="COMMON.SAVE_AND_ASSIGN")
-
-.tools(ng-class="{visible: editMode}")
-    a.e2e-save-editor(
-        ng-class="{disabled: required && !markdown.length}"
-        tg-loading="saving"
-        href="#",
-        ng-click="save($event)"
-    )
-        tg-svg(svg-icon="icon-save")
-    a.e2e-cancel-editor(
-        href="#",
-        ng-click="cancelWithConfirmation($event)"
-        title="{{ 'COMMON.CANCEL' | translate }}"
-    )
-        tg-svg(svg-icon="icon-close")
