@@ -34,30 +34,31 @@ ProjectMenuDirective = (projectService, lightboxFactory, $timeout, $rootScope, $
                 fixed = false
 
         $timeout ( ->
-            newIssueButton = document.createElement('button')
-            newIssueButton.textContent = $translate.instant('ISSUES.ACTION_NEW_ISSUE')
-            newIssueButton.style.cssText = 'cursor: pointer;' +
-                'display: inline-flex; justify-content: center; align-items: center;' +
-                'box-sizing: border-box; padding: .75rem 1.5rem; margin: 10px;' +
-                'border: 0; border-radius: 4px;' +
-                'color: #2E3440; background-color: #83EEDE;' +
-                'font: inherit; font-size: .8rem; line-height: initial;' +
-                'text-align: center; text-transform: uppercase; white-space: nowrap;' +
-                'transition: all .3s linear;'
-            newIssueButton.addEventListener 'mouseover', () ->
-                @.style.backgroundColor = '#008AA8'
-                @.style.color = '#FFFFFF'
-            newIssueButton.addEventListener 'mouseleave', () ->
-                @.style.backgroundColor = '#83EEDE'
-                @.style.color = '#2E3440'
-            newIssueButton.addEventListener 'click', () ->
-                project = projectService.project.toJS()
-                $rootScope.$broadcast 'genericform:new',
-                    objType: 'issue',
-                    project: project
-            navInner = document.querySelector('tg-legacy-loader').shadowRoot.querySelector('.nav-inner')
-            menu = navInner.querySelector('.main-menu')
-            navInner.insertBefore(newIssueButton, menu.nextSibling)
+            project = projectService.project.toJS()
+            if project.is_issues_activated and 'modify_issue' in project.my_permissions
+                newIssueButton = document.createElement('button')
+                newIssueButton.textContent = $translate.instant('ISSUES.ACTION_NEW_ISSUE')
+                newIssueButton.style.cssText = 'cursor: pointer;' +
+                    'display: inline-flex; justify-content: center; align-items: center;' +
+                    'box-sizing: border-box; padding: .75rem 1.5rem; margin: 10px;' +
+                    'border: 0; border-radius: 4px;' +
+                    'color: #2E3440; background-color: #83EEDE;' +
+                    'font: inherit; font-size: .8rem; line-height: initial;' +
+                    'text-align: center; text-transform: uppercase; white-space: nowrap;' +
+                    'transition: all .3s linear;'
+                newIssueButton.addEventListener 'mouseover', () ->
+                    @.style.backgroundColor = '#008AA8'
+                    @.style.color = '#FFFFFF'
+                newIssueButton.addEventListener 'mouseleave', () ->
+                    @.style.backgroundColor = '#83EEDE'
+                    @.style.color = '#2E3440'
+                newIssueButton.addEventListener 'click', () ->
+                    $rootScope.$broadcast 'genericform:new',
+                        objType: 'issue',
+                        project: project
+                navInner = document.querySelector('tg-legacy-loader').shadowRoot.querySelector('.nav-inner')
+                menu = navInner.querySelector('.main-menu')
+                navInner.insertBefore(newIssueButton, menu.nextSibling)
         ), 10
 
     return {
