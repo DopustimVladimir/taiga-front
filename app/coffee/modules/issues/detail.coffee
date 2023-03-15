@@ -279,6 +279,7 @@ IssueStatusButtonDirective = ($rootScope, $repo, $confirm, $loading, $modelTrans
 
     link = ($scope, $el, $attrs, $model) ->
         isEditable = ->
+            return if $scope.issue.is_closed and not $scope.project.i_am_admin
             return $scope.project.my_permissions.indexOf("modify_issue") != -1
 
         render = (issue) =>

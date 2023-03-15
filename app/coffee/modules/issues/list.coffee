@@ -589,17 +589,25 @@ IssueStatusInlineEditionDirective = ($repo, $template, $rootscope) ->
             issueStatusDomParent.css('color', status.color)
 
     link = ($scope, $el, $attrs) ->
+        isEditable = ->
+            return if $scope.issue.is_closed and not $scope.project.i_am_admin
+            return $scope.project.my_permissions.indexOf("modify_issue") != -1
+
         $ctrl = $el.controller()
         issue = $scope.$eval($attrs.tgIssueStatusInlineEdition)
 
         $el.on "click", ".issue-status", (event) ->
             event.preventDefault()
             event.stopPropagation()
+            return if not isEditable()
+
             $el.find(".pop-status").popover().open()
 
         $el.on "click", ".status", (event) ->
             event.preventDefault()
             event.stopPropagation()
+            return if not isEditable()
+
             target = angular.element(event.currentTarget)
 
             issue.status = target.data("status-id")

@@ -151,9 +151,14 @@ RelatedTaskStatusDirective = ($repo, $template) ->
         notAutoSave = $scope.$eval($attrs.notAutoSave)
         autoSave = !notAutoSave
 
+        isEditable = ->
+            return if $scope.task.is_closed and not $scope.project.i_am_admin
+            return $scope.project.my_permissions.indexOf("modify_task") != -1
+
         $el.on "click", ".task-status", (event) ->
             event.preventDefault()
             event.stopPropagation()
+            return if not isEditable()
 
             $el.find(".pop-status").popover().open()
 
@@ -163,6 +168,8 @@ RelatedTaskStatusDirective = ($repo, $template) ->
         $el.on "click", ".status", debounce 2000, (event) ->
             event.preventDefault()
             event.stopPropagation()
+            return if not isEditable()
+
             target = angular.element(event.currentTarget)
             task.status = target.data("status-id")
             $el.find(".pop-status").popover().close()

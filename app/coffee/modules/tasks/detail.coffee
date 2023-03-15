@@ -269,6 +269,7 @@ TaskStatusButtonDirective = ($rootScope, $repo, $confirm, $loading, $modelTransf
 
     link = ($scope, $el, $attrs, $model) ->
         isEditable = ->
+            return if $scope.task.is_closed and not $scope.project.i_am_admin
             return $scope.project.my_permissions.indexOf("modify_task") != -1
 
         render = (task) =>
