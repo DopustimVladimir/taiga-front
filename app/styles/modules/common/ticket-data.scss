@@ -259,15 +259,17 @@
     display: flex;
     margin: .5rem -.25rem 0;
     .ticket-users-action {
+        align-items: center;
         background: $white;
         color: $gray;
         cursor: pointer;
         display: flex;
         flex-grow: 1;
-        font-size: .9rem;
+        font-size: .8rem;
         justify-content: center;
-        line-height: 2rem;
+        line-height: 1.2rem;
         margin: 0 .25rem;
+        padding: .25rem;
         text-align: center;
         svg {
             fill: $gray;
