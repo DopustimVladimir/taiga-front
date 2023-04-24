@@ -1,5 +1,19 @@
+
+.details-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+    .details-wrapper {
+        flex-wrap: wrap;
+    }
+}
+
 .detail {
     background: $mass-white;
+    flex-basis: 700px;
+    flex-grow: 1;
     padding: 0;
     &.closed {
         pointer-events: none;

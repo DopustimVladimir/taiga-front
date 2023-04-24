@@ -43,10 +43,15 @@
 .ticket-data {
     background: $grey-02;
     flex-basis: 300px;
-    max-width: 300px;
     padding: 1rem;
     &.closed .ticket-section {
         pointer-events: none;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .ticket-data {
+        flex-grow: 1;
     }
 }
 
