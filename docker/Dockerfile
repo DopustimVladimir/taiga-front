@@ -4,24 +4,33 @@
 #
 # Copyright (c) 2021-present Kaleidos Ventures SL
 
-FROM nginx:1.23-alpine
+FROM nginx:1.24-bullseye
 LABEL maintainer="support@taiga.io"
 
 COPY docker/default.conf /etc/nginx/conf.d/default.conf
 COPY docker/conf.json.template /
 COPY docker/config_env_subst.sh /docker-entrypoint.d/30_config_env_subst.sh
 
-RUN set -eux; \
-    apk update; \
-    apk add --no-cache --virtual .build-deps \
-       subversion; \
-    apk add \
-       bash; \
+COPY . /taiga-front
+WORKDIR /taiga-front
+
+RUN apt update; \
+    apt install -y \
+        bash \
+        curl \
+        git \
+        subversion; \
+    # Install nvm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash; \
+    export NVM_DIR="$HOME/.nvm"; \
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; \
     # Install taiga-front core
-    wget https://github.com/kaleidos-ventures/taiga-front-dist/archive/6.6.0.zip -O source.zip; \
-    unzip source.zip; \
-    mv /taiga-front-dist-6.6.0 /taiga; \
-    mv /conf.json.template taiga/dist/; \
+    nvm install; \
+    nvm use; \
+    npm ci; \
+    npx gulp deploy; \
+    # ?
+    mv /conf.json.template /taiga/dist; \
     chmod +x /docker-entrypoint.d/30_config_env_subst.sh; \
     # Install taiga-front contribs
     mkdir /taiga/dist/plugins; \
@@ -30,9 +39,15 @@ RUN set -eux; \
     svn export "https://github.com/kaleidos-ventures/taiga-contrib-github-auth/tags/6.6.0/front/dist" "github-auth"; \
     svn export "https://github.com/kaleidos-ventures/taiga-contrib-gitlab-auth/tags/6.6.0/front/dist" "gitlab-auth"; \
     cd /; \
-    # Remove unused dependencies
-    apk del --no-cache .build-deps; \
-    rm source.zip; \
+    # remove unneeded files and packages
+    apt purge -y \
+        bash \
+        curl \
+        git \
+        subversion; \
+    apt autoremove -y; \
+    rm -rf /var/lib/apt/lists/*; \
+    rm -rf /root/.cache; \
     # Ready for nginx
-    mv /taiga/dist/* /usr/share/nginx/html; \
-    rm -rf /taiga
+    mv /taiga-front/dist/* /usr/share/nginx/html; \
+    rm -rf /taiga-front
