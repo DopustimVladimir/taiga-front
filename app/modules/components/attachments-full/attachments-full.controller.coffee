@@ -26,7 +26,6 @@ class AttachmentsFullController
         @.maxFileSize = @config.get("maxUploadFileSize", null)
         @.maxFileSize = sizeFormat(@.maxFileSize) if @.maxFileSize
         @.maxFileSizeMsg = if @.maxFileSize then @translate.instant("ATTACHMENT.MAX_UPLOAD_SIZE", {maxFileSize: @.maxFileSize}) else ""
-        @.attachmentsZipHref = "#{@config.get('api')}zip_attachments?project=#{@.projectId}&object_id=#{@.objId}"
 
         taiga.defineImmutableProperty @, 'attachments', () => return @attachmentsFullService.attachments
         taiga.defineImmutableProperty @, 'deprecatedsCount', () => return @attachmentsFullService.deprecatedsCount
@@ -45,6 +44,26 @@ class AttachmentsFullController
         @.mode = mode
 
         @storage.set('attachment-mode', mode)
+
+    downloadAttachments: () ->
+        @http({
+            url: "#{@config.get('api')}zip_attachments",
+            responseType: 'arraybuffer',
+            method: 'GET',
+            params: {
+                project: @.projectId,
+                object_id: @.objId
+            }
+        }).then (response) ->
+            data = response.data
+            dataType = response.headers()['content-type']
+            if data and dataType
+                fileUrl = window.URL.createObjectURL(new Blob [ data ], type: dataType)
+                fileName = 'attachments.zip'
+                link = document.createElement 'a'
+                link.href = fileUrl
+                link.download = fileName
+                link.click()
 
     sortAttachments: (prop) ->
         @attachmentsFullService.sortAttachments(prop)

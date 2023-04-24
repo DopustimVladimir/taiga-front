@@ -6,8 +6,8 @@
 //- Copyright (c) 2021-present Kaleidos Ventures SL
 
 form.single-attachment(
-    ng-class="{deprecated: vm.attachment.getIn(['file', 'is_deprecated'])}",
-    ng-if="vm.attachment.getIn(['file', 'id'])",
+    ng-class="{deprecated: vm.attachment.getIn(['file', 'is_deprecated'])}"
+    ng-if="vm.attachment.getIn(['file', 'id'])"
     ng-submit="vm.save()"
 )
 
@@ -15,24 +15,28 @@ form.single-attachment(
         a.e2e-attachment-link(
             tg-attachment-link="vm.attachment"
             href="{{::vm.attachment.getIn(['file', 'url'])}}"
-            title="{{::vm.attachment.get(['file', 'name'])}}"
+            title="{{::vm.attachment.getIn(['file', 'name'])}}"
             target="_blank"
             download="{{::vm.attachment.getIn(['file', 'name'])}}"
         )
             tg-svg(svg-icon="icon-attachment")
             span {{::vm.attachment.getIn(['file', 'name'])}}
 
-    .attachment-comments(ng-if="!vm.attachment.get('editable') && vm.attachment.getIn(['file', 'description'])")
+    .attachment-comments(
+        ng-if="!vm.attachment.get('editable') && vm.attachment.getIn(['file', 'description'])"
+        title="{{::vm.attachment.getIn(['file', 'description'])}}"
+    )
         span.deprecated-file(ng-if="vm.attachment.getIn(['file', 'is_deprecated'])") {{'ATTACHMENT.DEPRECATED' | translate}}
         span {{vm.attachment.getIn(['file', 'description'])}}
 
     .editable.editable-attachment-comment(ng-if="vm.attachment.get('editable')")
         input(
-            type="text",
-            name="description",
-            maxlength="140",
-            ng-model="vm.form.description",
-            tg-auto-select,
+            type="text"
+            name="description"
+            maxlength="140"
+            title="{{::vm.attachment.getIn(['file', 'name'])}}"
+            ng-model="vm.form.description"
+            tg-auto-select
             ng-keydown="$event.which === 27 && vm.editMode(false)"
             placeholder="{{'ATTACHMENT.DESCRIPTION' | translate}}"
         )
@@ -49,10 +53,10 @@ form.single-attachment(
             for="attach-{{::vm.attachment.getIn(['file', 'id'])}}-is-deprecated"
             translate="{{'ATTACHMENT.DEPRECATED_FILE' | translate}}")
 
-    .attachment-size
+    .attachment-size(ng-if="!vm.attachment.get('editable')")
         span {{::vm.attachment.getIn(['file', 'size']) | sizeFormat}}
 
-    .attachment-created-date
+    .attachment-created-date(ng-if="!vm.attachment.get('editable')")
         span {{::vm.attachment.getIn(['file', 'created_date']) | momentFormat:'DD MMM YYYY HH:mm'}}
 
     .attachment-settings(ng-if="vm.attachment.get('editable')")

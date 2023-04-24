@@ -47,6 +47,7 @@
         align-items: center;
         border-bottom: 1px solid $color-gray100;
         display: flex;
+        gap: 1rem;
         padding: .5rem;
         position: relative;
         &:hover {
@@ -65,31 +66,47 @@
     }
     .attachment-name {
         flex-grow: 1;
-        flex-shrink: 0;
-        padding-right: 1rem;
-        span {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        a {
+            display: flex;
+            gap: 1ch;
+            span {
+                /* stylelint-disable */
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                /* stylelint-enable */
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
+    }
+    .attachment-comments {
+        /* stylelint-disable */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        /* stylelint-enable */
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .attachment-comments,
     .editable-attachment-comment {
-        flex: 2;
-        // flex-basis: 50%;
-        margin-right: .5rem;
+        flex-grow: 1;
         span {
             color: $grayer;
         }
     }
     .attachment-size {
-        flex-basis: 20%;
-        flex-grow: 0;
+        color: $color-black600;
         flex-shrink: 0;
         text-align: center;
         span {
             color: $color-black600;
         }
+    }
+    .attachment-created-date {
+        color: $color-black600;
+        flex-shrink: 0;
     }
     .attachment-settings {
         flex-basis: 10%;
@@ -124,7 +141,7 @@
     }
     .editable-attachment-deprecated {
         display: flex;
-        padding-left: 1rem;
+        gap: 1ch;
         span {
             color: $color-link-tertiary;
         }
