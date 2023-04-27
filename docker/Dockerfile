@@ -8,7 +8,7 @@ FROM nginx:1.24-bullseye
 LABEL maintainer="support@taiga.io"
 
 COPY docker/default.conf /etc/nginx/conf.d/default.conf
-COPY docker/conf.json.template /
+COPY docker/conf.json.template /conf.json.template
 COPY docker/config_env_subst.sh /docker-entrypoint.d/30_config_env_subst.sh
 
 COPY . /taiga-front
@@ -29,9 +29,8 @@ RUN apt update; \
     nvm use; \
     npm ci; \
     npx gulp deploy; \
-    # ?
-    mv /conf.json.template /taiga/dist; \
-    chmod +x /docker-entrypoint.d/30_config_env_subst.sh; \
+    mv /conf.json.template dist/conf.json.template; \
+    mv /taiga-front/dist/* /usr/share/nginx/html; \
     # Install taiga-front contribs
     mkdir /taiga/dist/plugins; \
     cd /taiga/dist/plugins; \
@@ -39,7 +38,9 @@ RUN apt update; \
     svn export "https://github.com/kaleidos-ventures/taiga-contrib-github-auth/tags/6.6.0/front/dist" "github-auth"; \
     svn export "https://github.com/kaleidos-ventures/taiga-contrib-gitlab-auth/tags/6.6.0/front/dist" "gitlab-auth"; \
     cd /; \
-    # remove unneeded files and packages
+    # Prepare entrypoint
+    chmod +x /docker-entrypoint.d/30_config_env_subst.sh; \
+    # Remove garbage
     apt purge -y \
         bash \
         curl \
@@ -48,6 +49,4 @@ RUN apt update; \
     apt autoremove -y; \
     rm -rf /var/lib/apt/lists/*; \
     rm -rf /root/.cache; \
-    # Ready for nginx
-    mv /taiga-front/dist/* /usr/share/nginx/html; \
     rm -rf /taiga-front
