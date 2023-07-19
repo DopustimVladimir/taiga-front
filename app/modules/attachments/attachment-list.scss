@@ -69,6 +69,7 @@
         a {
             display: flex;
             gap: 1ch;
+            pointer-events: auto;
             span {
                 /* stylelint-disable */
                 display: -webkit-box;

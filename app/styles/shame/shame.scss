@@ -15,9 +15,9 @@ svg {
 
 // Avoid previous selector to remove event on child SVG click.
 
-a[ng-click] svg {
-    pointer-events: auto;
-}
+// a[ng-click] svg {
+//     pointer-events: auto;
+// }
 
 // chrome url break
 tg-card {
