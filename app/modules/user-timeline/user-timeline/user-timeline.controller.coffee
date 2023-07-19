@@ -49,15 +49,38 @@ class UserTimelineController extends mixOf(taiga.Controller, taiga.PageMixin, ta
                 return @.timelineList
 
     filterTimelineList: (filterValue) ->
+
         if not filterValue
             @.timelineListVisible = @.timelineList
         else
             @.timelineListVisible = @.timelineList.filter (it) ->
-                if not it.getIn([ 'data', 'issue' ])
-                    return false
-                matchRef = it.getIn([ 'data', 'issue', 'ref' ]) is parseInt(filterValue)
-                matchSubject = it.getIn([ 'data', 'issue', 'subject' ]).includes(filterValue)
-                return matchRef or matchSubject
+
+                if filterValue.match(/\#\d+/)
+                    value = parseInt(filterValue.slice(1))
+                    if it.getIn([ 'data', 'userstory' ])
+                        matchedUserstoryRef =
+                            it.getIn([ 'data', 'userstory', 'ref' ]) is value
+                    if it.getIn([ 'data', 'task' ])
+                        matchedTaskRef =
+                            it.getIn([ 'data', 'task', 'ref' ]) is value
+                    if it.getIn([ 'data', 'issue' ])
+                        matchedIssueRef =
+                            it.getIn([ 'data', 'issue', 'ref' ]) is value
+                else
+                    value = filterValue
+                    if it.getIn([ 'data', 'userstory' ])
+                        matchedUserstorySubject =
+                            it.getIn([ 'data', 'userstory', 'subject' ]).includes(value)
+                    if it.getIn([ 'data', 'task' ])
+                        matchTaskSubject =
+                            it.getIn([ 'data', 'task', 'subject' ]).includes(value)
+                    if it.getIn([ 'data', 'issue' ])
+                        matchIssueSubject =
+                            it.getIn([ 'data', 'issue', 'subject' ]).includes(value)
+
+                return matchedUserstoryRef or matchedTaskRef or matchedIssueRef or
+                    matchedUserstorySubject or matchTaskSubject or matchIssueSubject or false
+
         @.filterValue = filterValue
 
 angular.module("taigaUserTimeline")

@@ -1805,7 +1805,7 @@
         "HINT4_TEXT": "Don't worry, on your dashboard you'll find your open tasks, issues, and user stories in the order you worked on them."
     },
     "TIMELINE": {
-        "FILTER_BY_ISSUE": "Filter by issue",
+        "FILTER": "Filter",
         "NOTHING_FOUND": "Nothing found",
         "UPLOAD_ATTACHMENT": "{{username}} has uploaded a new attachment in {{obj_name}}",
         "US_CREATED": "{{username}} has created a new user story {{obj_name}} in {{project_name}}",
